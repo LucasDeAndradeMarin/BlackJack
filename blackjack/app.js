@@ -17,6 +17,7 @@ const DEALER = blackjackGame['dealer']
 const hitSound = new Audio('sounds/swish.m4a');
 const winSound = new Audio('sounds/cash.mp3');
 const lossSound = new Audio('sounds/aww.mp3');
+const drawSound = new Audio('sounds/derp.mp4');
 
 
 document.querySelector('#blackjack-hit-button').addEventListener('click', blackjackHit);
@@ -190,6 +191,7 @@ function showResult(winner) {
             document.querySelector('#draws').textContent = blackjackGame['draws'];
             message = 'Opa, foi um empate!';
             messageColor = 'black';
+            drawSound.play();
         }
 
         document.querySelector('#blackjack-result').textContent = message;
