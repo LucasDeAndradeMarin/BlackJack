@@ -1,8 +1,16 @@
+/*
+c = clubs(paus(também conhecido como zap));
+h = hearts(copas);
+s = spades(espada);
+d = diamonds(ouro);
+'cardsMap': {'2c':2, '2h':2, '2s':2, '2d':2, '3c':3, '3h':3, '3s':3, '3d':3, '4c':4, '4h':4, '4s':4, '4d':4, '5c':5, '5h':5, '5s':5, '5d':5, '6c':6, '6h':6, '6s':6, '6d':6, '7c':7, '7h':7, '7s':7, '7d':7, '8c':8, '8h':8, '8s':8, '8d':8, '9c':9, '9h':9, '9s':9, '9d':9, '10c':10, '10h':10, '10s':10, '10d':10, 'Qc':10, 'Qh':10, 'Qs':10, 'Qd':10, 'Jc':10, 'Jh':10, 'Js':10, 'Jd':10, 'Kc':10, 'Kh':10, 'Ks':10, 'Kd':10, 'Ac':[1, 11], 'Ah':[1, 11], 'As':[1, 11], 'Ad':[1, 11]},
+*/
+
 let blackjackGame = {
     'you':{'scoreSpan': '#your-blackjack-result', 'div': '#your-box', 'score': 0},
     'dealer':{'scoreSpan': '#dealer-blackjack-result', 'div': '#dealer-box', 'score': 0},
-    'cards': ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'K', 'J', 'Q', 'A'],
-    'cardsMap': {'2':2, '3':3, '4':4, '5':5, '6':6, '7':7, '8':8, '9':9, '10':10, 'K': 10, 'J':10, 'Q':10, 'A': [1, 11]},
+    'cards': ['2c', '2h', '2s', '2d', '3c', '3h', '3s', '3d', '4c', '4h', '4s', '4d', '5c', '5h', '5s', '5d', '6c', '6h', '6s', '6d', '7c', '7h', '7s', '7d', '8c', '8h', '8s', '8d', '9c', '9h', '9s', '9d', '10c', '10h', '10s', '10d', 'Qc', 'Qh', 'Qs', 'Qd', 'Jc', 'Jh', 'Js', 'Jd', 'Kc', 'Kh', 'Ks', 'Kd', 'Ac', 'Ah', 'As', 'Ad'],
+    'cardsMap': {'2c':2, '2h':2, '2s':2, '2d':2, '3c':3, '3h':3, '3s':3, '3d':3, '4c':4, '4h':4, '4s':4, '4d':4, '5c':5, '5h':5, '5s':5, '5d':5, '6c':6, '6h':6, '6s':6, '6d':6, '7c':7, '7h':7, '7s':7, '7d':7, '8c':8, '8h':8, '8s':8, '8d':8, '9c':9, '9h':9, '9s':9, '9d':9, '10c':10, '10h':10, '10s':10, '10d':10, 'Qc':10, 'Qh':10, 'Qs':10, 'Qd':10, 'Jc':10, 'Jh':10, 'Js':10, 'Jd':10, 'Kc':10, 'Kh':10, 'Ks':10, 'Kd':10, 'Ac':[1, 11], 'Ah':[1, 11], 'As':[1, 11], 'Ad':[1, 11]},
     'wins':0,
     'losses':0,
     'draws':0,
@@ -14,10 +22,10 @@ const YOU = blackjackGame['you']
 const DEALER = blackjackGame['dealer']
 
 
-const hitSound = new Audio('sounds/swish.m4a');
-const winSound = new Audio('sounds/cash.mp3');
-const lossSound = new Audio('sounds/aww.mp3');
-const drawSound = new Audio('sounds/derp.mp4');
+const hitSound = new Audio('midia/sounds/swish.m4a');
+const winSound = new Audio('midia/sounds/cash.mp3');
+const lossSound = new Audio('midia/sounds/aww.mp3');
+const drawSound = new Audio('midia/sounds/derp.mp4');
 
 
 document.querySelector('#blackjack-hit-button').addEventListener('click', blackjackHit);
@@ -39,7 +47,7 @@ function blackjackHit() {
 
 
 function randomCard() {
-    let randomIndex = Math.floor(Math.random() * 13);
+    let randomIndex = Math.floor(Math.random() * 52);
     return blackjackGame['cards'][randomIndex];
 }
 
@@ -47,7 +55,7 @@ function randomCard() {
 function showCard(card, activePlayer) {
     if (activePlayer['score'] <=21) {
         let cardImage = document.createElement('img');
-        cardImage.src = `images/${card}.png`;
+        cardImage.src = `midia/cards/${card}.png`;
         document.querySelector(activePlayer['div']).appendChild(cardImage);
         hitSound.play();
     } 
@@ -90,7 +98,7 @@ function blackjackDeal() {
 }
 
 function updateScore(card, activePlayer) {
-    if (card === 'A') {
+    if (card === 'Ac' || card === 'Ah' || card === 'As' || card === 'Ad') {
         if (activePlayer['score']+blackjackGame['cardsMap'][card][1] <= 21) {
             activePlayer['score'] += blackjackGame['cardsMap'][card][1];
         } else {
