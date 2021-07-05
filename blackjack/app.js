@@ -22,10 +22,10 @@ const YOU = blackjackGame['you']
 const DEALER = blackjackGame['dealer']
 
 
-const hitSound = new Audio('midia/sounds/swish.m4a');
-const winSound = new Audio('midia/sounds/cash.mp3');
-const lossSound = new Audio('midia/sounds/aww.mp3');
-const drawSound = new Audio('midia/sounds/derp.mp4');
+const hitSound = new Audio('/midia/sounds/swish.m4a');
+const winSound = new Audio('/midia/sounds/cash.mp3');
+const lossSound = new Audio('/midia/sounds/aww.mp3');
+const drawSound = new Audio('/midia/sounds/derp.mp4');
 
 
 document.querySelector('#blackjack-hit-button').addEventListener('click', blackjackHit);
@@ -44,22 +44,22 @@ function blackjackHit() {
 }
 
 
-
-
 function randomCard() {
     let randomIndex = Math.floor(Math.random() * 52);
     return blackjackGame['cards'][randomIndex];
 }
 
 
+
 function showCard(card, activePlayer) {
     if (activePlayer['score'] <=21) {
         let cardImage = document.createElement('img');
-        cardImage.src = `midia/cards/${card}.png`;
+        cardImage.src = `/midia/cards/${card}.png`;
         document.querySelector(activePlayer['div']).appendChild(cardImage);
         hitSound.play();
     } 
 }
+
 
 
 function blackjackDeal() {
@@ -97,7 +97,10 @@ function blackjackDeal() {
     }
 }
 
+
+
 function updateScore(card, activePlayer) {
+    //It will check if adding 11 will keep me below 21, and, if yes, add 11. If it don't, it adds 1.
     if (card === 'Ac' || card === 'Ah' || card === 'As' || card === 'Ad') {
         if (activePlayer['score']+blackjackGame['cardsMap'][card][1] <= 21) {
             activePlayer['score'] += blackjackGame['cardsMap'][card][1];
@@ -121,7 +124,7 @@ function updateScore(card, activePlayer) {
     }
 }
 
-
+//This, along with the async function, we have a simple bot
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -147,11 +150,13 @@ async function dealerLogic() {
 }
 
 
-
+//This function will compute the winner and return who won(you ou the computer(win or loss)).
+//Also updates the wins, draws and losses
 function computeWinner() {
     let winner;
 
     if(YOU['score'] <= 21) {
+        //higher score than the dealer's or dealer bust but you're under 21
         if(YOU['score'] > DEALER['score'] || (DEALER['score'] > 21)) {
             blackjackGame['wins']++;
             winner = YOU;
@@ -164,11 +169,13 @@ function computeWinner() {
             blackjackGame['draws']++;
         }
 
+    //   when you bust but the dealer doesn't 
     } else if (YOU['score'] > 21 && DEALER['score'] <= 21) {
         blackjackGame['losses']++;
         winner = DEALER;
 
-
+    
+    //when BOTH you and the dealer busts    
     } else if (YOU['score'] > 21 && DEALER['score'] > 21) {
         blackjackGame['draws']++;
     }
@@ -206,3 +213,13 @@ function showResult(winner) {
         document.querySelector('#blackjack-result').style.color = messageColor;
     }
 }
+
+
+document.getElementById("redo-btn").addEventListener("click", function() {
+    document.getElementsByClassName("popup")[0].classList.add("active");
+});
+
+document.getElementById("no").addEventListener("click", function() {
+    document.getElementsByClassName("popup")[0].classList.remove("active");
+});
+
