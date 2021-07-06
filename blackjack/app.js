@@ -3,7 +3,7 @@ c = clubs(paus(também conhecido como zap));
 h = hearts(copas);
 s = spades(espada);
 d = diamonds(ouro);
-'cardsMap': {'2c':2, '2h':2, '2s':2, '2d':2, '3c':3, '3h':3, '3s':3, '3d':3, '4c':4, '4h':4, '4s':4, '4d':4, '5c':5, '5h':5, '5s':5, '5d':5, '6c':6, '6h':6, '6s':6, '6d':6, '7c':7, '7h':7, '7s':7, '7d':7, '8c':8, '8h':8, '8s':8, '8d':8, '9c':9, '9h':9, '9s':9, '9d':9, '10c':10, '10h':10, '10s':10, '10d':10, 'Qc':10, 'Qh':10, 'Qs':10, 'Qd':10, 'Jc':10, 'Jh':10, 'Js':10, 'Jd':10, 'Kc':10, 'Kh':10, 'Ks':10, 'Kd':10, 'Ac':[1, 11], 'Ah':[1, 11], 'As':[1, 11], 'Ad':[1, 11]},
+
 */
 
 let blackjackGame = {
@@ -52,6 +52,7 @@ function randomCard() {
 }
 
 
+
 function showCard(card, activePlayer) {
     if (activePlayer['score'] <=21) {
         let cardImage = document.createElement('img');
@@ -60,6 +61,7 @@ function showCard(card, activePlayer) {
         hitSound.play();
     } 
 }
+
 
 
 function blackjackDeal() {
@@ -97,6 +99,8 @@ function blackjackDeal() {
     }
 }
 
+
+
 function updateScore(card, activePlayer) {
     if (card === 'Ac' || card === 'Ah' || card === 'As' || card === 'Ad') {
         if (activePlayer['score']+blackjackGame['cardsMap'][card][1] <= 21) {
@@ -111,7 +115,6 @@ function updateScore(card, activePlayer) {
 
 
 
-
  function showScore(activePlayer) {
     if (activePlayer['score']>21) {
         document.querySelector(activePlayer['scoreSpan']).textContent = 'BUST!';
@@ -120,6 +123,7 @@ function updateScore(card, activePlayer) {
         document.querySelector(activePlayer['scoreSpan']).textContent = activePlayer['score']
     }
 }
+
 
 
 function sleep(ms) {
@@ -178,6 +182,7 @@ function computeWinner() {
 }
 
 
+
 function showResult(winner) {
     let message, messageColor;
 
@@ -206,6 +211,7 @@ function showResult(winner) {
         document.querySelector('#blackjack-result').style.color = messageColor;
     }
 }
+
 
 
 document.getElementById("redo-btn").addEventListener("click", function() {
